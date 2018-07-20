@@ -1,0 +1,44 @@
+set terminal pngcairo size 400,150 font 'Courier, 8'
+unset key
+set grid
+set border 3 lw 2
+set samples 100000
+
+if (exists('n') == 0) n = 3
+if (exists('K') == 0) K = 1
+if (exists('framenr') == 0) framenr = 0
+
+H  = 2
+# https://github.com/retorillo/easing
+# NOTE: k is also offset +1 in y-axis
+k  = K - 1
+D0 = 1.0
+D1 = 1.0
+D2 = 1.0
+
+t0 = D0
+t1 = D1 + D0
+t2 = D2 + D1 + D0
+
+F(x) = (2 **(n-1) * k * x ** (n+1)) / (n+1) * D1 ** n
+G(x) = k * (x - D1/2) + F(D1 - x)
+
+set xrange[0:t2]
+set xtics (0, 't0' t0, 't1' t1, 't2' t2) nomirror
+set ytics (-1, 0, 1) nomirror
+
+ftitle = sprintf('tmp/graph_2_%02d.png', framenr)
+set output ftitle
+
+ktitle = sprintf('K=%02d', K)
+set title ktitle
+
+plot \
+  0  <= x && x <= t0          ? sin(x * 2 * pi * H) : 0/0 lw 2, \
+  t0 <= x && x <= t0 + D1 / 2 ? sin((F(x - D0) + x) * 2 * pi * H) : 0/0 lw 2, \
+  t0 + D1 / 2 <= x && x <= t1 ? sin((G(x - D0) + x) * 2 * pi * H) : 0/0 lw 2, \
+  t1 <= x && x <= t2          ? sin((G(D1) + k * (x - (D0 + D1)) + x) * 2 * pi * H) : 0/0 lw 2
+
+framenr = framenr + 1
+K = K + 1
+if (K <= 9) reread

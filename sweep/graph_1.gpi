@@ -1,0 +1,55 @@
+set terminal pngcairo size 400,200 font 'Courier, 8'
+unset key
+set grid
+set border 3 lw 2
+set samples 10000
+
+if (exists('n') == 0) n = 1
+if (exists('framenr') == 0) framenr = 0
+ofile = sprintf('tmp/graph_1_%02d.png', framenr)
+set output ofile
+
+K  = 3.0
+# https://github.com/retorillo/easing
+# NOTE: k is also offset +1 in y-axis
+k  = K - 1
+D0 = 1.0
+D1 = 1.0
+D2 = 1.0
+
+ltitle = sprintf('n=%02d', n)
+set multiplot layout 1,2 title ltitle
+
+t0 = D0
+t1 = D1 + D0
+t2 = D2 + D1 + D0
+set title 'e(x)'
+set xtics (0, 't0' t0, 't1' t1, 't2' t2) nomirror
+set ytics (0, 1, 'K' k+1) nomirror
+set xrange [0:t2]
+set yrange [0:k+1]
+f(x) = 2**(n-1) * k * (x / D1)**n
+g(x) = k - f(D1 - x)
+plot 0 <= x && x <= t0 ? 1 : 0/0 lw 2 title '', \
+  t0 <= x && x <= t0 + D1/2 ? f(x - t0) + 1 : 0/0 lw 2 title '', \
+  t0 + D1/2 <= x && x <= t1 ? g(x - t0) + 1 : 0/0 lw 2 title '', \
+  t1 <= x && x <= t2 ? k + 1 : 0/0 lw 2 title ''
+
+set title 'E(x)'
+set xtics ('0' 0, 't0' D0, 't1' D0+D1, 't2' D0+D1+D2) nomirror
+F(x) = (2 **(n-1) * k * x ** (n+1)) / (n+1) * D1 ** n
+G(x) = k * (x - D1/2) + F(D1 - x)
+max_Ey = G(D1)+(D2+D1+D0)+k*D2
+set ytics ('' 0, '' D0, '' G(D1) + (D1 + D0), '' max_Ey) nomirror
+set xrange[0:D0+D1+D2]
+set yrange[0:max_Ey]
+plot D0 < x && x < D0+D1/2 ? F(x - D0) + x : 0/0 ls 2 lw 2 title 'i2', \
+  D0+D1/2 < x && x < D0+D1 ? G(x - D0) + x : 0/0 ls 3  lw 2 title 'i3', \
+  x < D0 ? x : 0/0 ls 1 lw 2 title 'i1', \
+  x > D0+D1 ? G(D1) + x + k * (x-(D0+D1)) : 0/0 ls 4 lw 2 title 'i4'
+unset multiplot
+
+
+n = n + 1
+framenr = framenr + 1
+if (n <= 5) reread

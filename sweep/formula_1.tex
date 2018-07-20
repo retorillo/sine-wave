@@ -1,0 +1,53 @@
+\documentclass[
+  border=2,
+  convert={
+    density=100 -alpha remove,
+    outext=.png
+  },
+]{standalone}
+\usepackage{amsmath}
+\begin{document}
+\begin{tabular}{l}
+  \begin{tabular}{l l l}
+    $\displaystyle t_0 = D_0$ &
+    $\displaystyle t_1 = D_0 + D_1$ &
+    $\displaystyle t_2 = D_0 + D_1 + D_2$
+  \end{tabular}
+  \\ \\
+  \begin{tabular}{l l}
+    $\displaystyle f(x) = 2^{(n-1)} k \left(\frac{x}{D_1}\right)^{n}$ &
+    $\displaystyle g(x) = k - f(D_1 - x)$
+  \end{tabular}
+  \\ \\
+  $
+    \displaystyle e(x) = \begin{cases}
+      1
+        & (0 \leq x \leq D_0) \\
+      f(x - D_0) + 1
+        & \left(D_0 \leq x \leq D_0 + \frac{D_1}{2}\right) \\
+      g(x - D_0) + 1
+        & \left(D_0 + \frac{D_1}{2} \leq x \leq D_1\right) \\
+      K
+        & (D_1 \leq x \leq D_2)
+    \end{cases}
+  $
+  \\ \\
+  \begin{tabular}{l l}
+    $\displaystyle F(x) = \frac{2^{(n-1)}kx^{(n+1)}}{(n+1){D_1}^{n}}$ &
+    $\displaystyle G(x) = k\left(x - \frac{D_1}{2}\right) + F(D_1-x)$
+  \end{tabular}
+  \\ \\
+  $
+    \displaystyle \int_0^x e(x) dx = \begin{cases}
+      x              
+        & (0  \leq x \leq D_0) \\
+      F(x - D_0) + x
+        & \left(D_0 \leq x \leq D_0 + \frac{D_1}{2}\right) \\
+      G(x - D_0) + x
+        & \left(D_0 + \frac{D_1}{2} \leq x \leq D_1\right) \\
+      G(D_1) + k(x - (D_0 + D_1)) + x
+        & (D_1 \leq x \leq D_2)
+    \end{cases}
+  $ 
+\end{tabular}
+\end{document}
