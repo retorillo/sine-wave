@@ -2,7 +2,7 @@ set terminal pngcairo size 400,150 font 'Courier, 8'
 unset key
 set grid
 set border 3 lw 2
-set samples 100000
+set samples 10000
 
 if (exists('n') == 0) n = 3
 if (exists('K') == 0) K = 1
@@ -13,14 +13,14 @@ H  = 2
 # NOTE: k is also offset +1 in y-axis
 k  = K - 1
 D0 = 1.0
-D1 = 1.0
+D1 = 0.3
 D2 = 1.0
 
 t0 = D0
 t1 = D1 + D0
 t2 = D2 + D1 + D0
 
-F(x) = (2 **(n-1) * k * x ** (n+1)) / (n+1) * D1 ** n
+F(x) = (2 **(n-1) * k * x ** (n+1)) / ((n+1) * D1 ** n)
 G(x) = k * (x - D1/2) + F(D1 - x)
 
 set xrange[0:t2]
@@ -30,7 +30,7 @@ set ytics (-1, 0, 1) nomirror
 ftitle = sprintf('tmp/graph_2_%02d.png', framenr)
 set output ftitle
 
-ktitle = sprintf('K=%02d', K)
+ktitle = sprintf('K=%01d', K)
 set title ktitle
 
 plot \
