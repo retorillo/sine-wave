@@ -22,13 +22,13 @@
   $
     \displaystyle e(x) = \begin{cases}
       1
-        & (0 \leq x \leq D_0) \\
+        & (0  \leq x \leq t_0) \\
       f(x - D_0) + 1
-        & \left(D_0 \leq x \leq D_0 + \frac{D_1}{2}\right) \\
+        & \left(t_0 \leq x \leq t_0 + \frac{D_1}{2}\right) \\
       g(x - D_0) + 1
-        & \left(D_0 + \frac{D_1}{2} \leq x \leq D_1\right) \\
+        & \left(t_0 + \frac{D_1}{2} \leq x \leq t_1\right) \\
       K
-        & (D_1 \leq x \leq D_2)
+        & (t_1 \leq x \leq t_2)
     \end{cases}
   $
   \\ \\
@@ -40,13 +40,13 @@
   $
     \displaystyle \int_0^x e(x) dx = \begin{cases}
       x              
-        & (0  \leq x \leq D_0) \\
+        & (0  \leq x \leq t_0) \\
       F(x - D_0) + x
-        & \left(D_0 \leq x \leq D_0 + \frac{D_1}{2}\right) \\
+        & \left(t_0 \leq x \leq t_0 + \frac{D_1}{2}\right) \\
       G(x - D_0) + x
-        & \left(D_0 + \frac{D_1}{2} \leq x \leq D_1\right) \\
+        & \left(t_0 + \frac{D_1}{2} \leq x \leq t_1\right) \\
       G(D_1) + k(x - (D_0 + D_1)) + x
-        & (D_1 \leq x \leq D_2)
+        & (t_1 \leq x \leq t_2)
     \end{cases}
   $ 
 \end{tabular}
