@@ -1,0 +1,18 @@
+\documentclass[
+  border=2,
+  convert={
+    density=100 -alpha remove,
+    outext=.png
+  },
+]{standalone}
+\usepackage{amsmath}
+\begin{document}
+\begin{tabular}{l l}
+  $
+    \displaystyle \mathit{FinalizeDuration}
+      = \left(1 - \frac{\mathit{offset}}{2\pi}\right)\frac{1}{H}
+  $ & $
+    \displaystyle 0 \leq \mathit{FinalizeDuration} < \frac{1}{H}
+  $
+\end{tabular}
+\end{document}

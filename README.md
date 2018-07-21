@@ -3,7 +3,7 @@
 Sine wave generation playground. Documented things are work in progress,
 and not guaranteed as proper solutions.
 
-## Sine Sweep
+## Generating Sine Sweep
 
 |    | Description                     | Unit   |
 | -- | ------------------------------- | ------ |
@@ -39,6 +39,35 @@ Finally, formula is defined as follows:
 ![](sweep/formula_2.png)
 
 ![](sweep/graph_2.gif)
+
+## Appending wave
+
+Partially generated sine wave does not ends with end of cycle
+unless its last arguments is integral multiple of `2 * PI`, so must remember
+its offset value to append next partial wave,
+
+If `x` is reset zero for each partial wave, in case that the last sine argument `A` is only provided,
+offset is described as follows:
+
+![](append/formula_1.png)
+
+![](append/graph_1.gif)
+
+Of course, if `fmod` function is avaiable: `offset = fmod(A, 2 * PI)`
+
+## Finalizing wave
+
+As above mentioned, sine wave does not always ends with end of cycle,
+so must adjust last partial wave duration by additional duration.
+This operation is called "finalize" on this document.
+
+Finalizing algoritm is similar with appending partial wave.
+In case that the last sine argument `A` and frequency `H` are provided,
+additional duration can be computed as follows:
+
+![](finalize/formula_1.png)
+
+![](finalize/graph_1.gif)
 
 ## License
 

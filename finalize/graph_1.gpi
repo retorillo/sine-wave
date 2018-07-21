@@ -1,0 +1,38 @@
+set terminal pngcairo size 400,100 font 'Courier, 8'
+
+if (exists('ix') == 0) ix = 0
+if (exists('framenr') == 0) framenr = 0
+H = 2
+delta_ix = (2 * pi) / 20.0
+D1 = 1
+D2 = 1
+
+ftitle = sprintf('tmp/graph_1_%02d.png', framenr)
+set output ftitle
+
+set ytic (-1, 0, 1) nomirror
+set yrange [-1:1]
+set xrange [0: D1 + D2]
+set samples 1000
+last_sin_arg = (ix + (D1 * 2 * pi) * H)
+ofs = last_sin_arg - floor(last_sin_arg / (2 * pi)) * (2 * pi)
+set border 3 lw 2
+
+Da = (1 - ofs / (2 * pi)) / H
+set xtic ('' 0, '' D1, '' D2 + D1) nomirror
+
+set key on outside bottom center 
+
+set grid
+
+unset label
+set label at D1, sin(ofs) '' point ls 3 pt 7 lw 2
+
+set bmargin 1
+plot 0 < x && x <= D1 ? sin(ix + (x * 2 * pi) * H) : 0/0 lw 2 title '', \
+  D1 <= x && x < D1 + Da ? sin(ofs + ((x - D1) * 2 * pi) * H) : 0/0 lw 2 title '', \
+  D1 + Da <= x && x < D1 + D2 ? 0 : 0/0 ls 2 lw 2 dt (5, 5) title ''
+
+ix = ix + delta_ix
+framenr = framenr + 1
+if (ix <= 2 * pi) reread
