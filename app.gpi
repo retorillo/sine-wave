@@ -1,23 +1,18 @@
-set terminal pngcairo enhanced size 640, 320
+set terminal pngcairo enhanced size 400, 100 font 'Courier, 8'
 set output 'app.png'
-set xrange [0:10000000]
-set yrange [-1 : 1]
 set tics scale 0
-set grid
-set xtics format " " nomirror
-set ytics format " " nomirror
-set tics font "Courier, 8"
-set key font "Courier, 8"
-set key right above
-set key spacing -1
+set samples 1000
+unset key
+set xtics ('' 0) nomirror
+set ytics ('' 0) nomirror
 set border 0
-set tmargin 1
-set bmargin 1
-set lmargin 0.5
-set rmargin 0.5
-set multiplot layout 4, 1
-plot 'app.dat' using 1:2 w line lw 1 title '30Hz (fixed)'
-plot 'app.dat' using 1:3 w line lw 1 title '30Hz -  60Hz (cubic ease)'
-plot 'app.dat' using 1:4 w line lw 1 title '30Hz - 240Hz (cubic ease)'
-plot 'app.dat' using 1:5 w line lw 1 title '30Hz -  15Hz (cubic ease)'
-unset multiplot
+set xrange[0:91000000]
+set yrange[-1:1]
+set bmargin 0.5
+set tmargin 0.5
+
+plot 'app.dat' using 1:2 w line lw 2 title '', \
+  'app.dat' using 1:3 w line lw 2 title '', \
+  'app.dat' using 1:4 w line lw 2 title ''
+
+  

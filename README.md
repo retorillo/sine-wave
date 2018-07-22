@@ -3,6 +3,8 @@
 Sine wave generation playground. Documented things are work in progress,
 and not guaranteed as proper solutions.
 
+![](app.png)
+
 ## Generating Sine Sweep
 
 |    | Description                     | Unit   |
